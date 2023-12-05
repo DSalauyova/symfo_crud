@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Ingredient
+{% endblock %}
+
+{% block body %}
+	{#rajoute une condition pour le cas s'il n'y a pas d'ingredients#}
+	<div class='container mt-4'>
+		{% if not ingredients.items is same as([]) %}
+			<h4 style="color: #4F805D">Tous les ingrédients :</h4>
+			<a href="{{ path('ingredient.new') }}">
+				<h4 style="background-color: yellow">
+					Il manque ce qu'il faut ? Vous pouvez y ajouter le votre !
+				</h4>
+			</a>
+
+			{# pour afficher un message de rajout d'un ingredient #}
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-success mt-4">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+
+			{# getTotalItemCount methode symf pour compter le nombre total des objets #}
+			<p class='mb-2'>
+				{{ ingredients.getTotalItemCount }}
+				ingrédients au total
+			</p>
+			<table class="table table-active">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Name</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Price</th>
+						<th scope="col">Edit</th>
+						<th scope="col">Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for ingredient in ingredients %}
+						<tr class="table">
+							<th scope="row">
+								<p>
+									{{ ingredient.id }}
+								</p>
+							</th>
+
+							<td>
+								<p>
+									{{ ingredient.name }}
+								</p>
+							</td>
+							<td>
+								<p>
+									{{ ingredient.quantity }}
+								</p>
+							</td>
+							<td>
+								<p>
+									{{ ingredient.price }}
+								</p>
+							</td>
+							<td>
+								<a href="{{ path('ingredient_edit', { id: ingredient.id }) }}" class="btn btn-primary">
+									Update
+								</a>
+								{# <a href="{{ path('ingredient.new') }}"></td> #}
+							</td>
+							<td>
+								<a href="{{ path('ingredient_delete', { id: ingredient.id }) }}" class="btn btn-danger">
+									Delete
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</tr>
+	</tbody>
+</table>
+
+{# display navigation #}
+<div class="navigation d-flex justify-content-center mt-4">
+	{{ knp_pagination_render(ingredients) }}
+</div>{% else %}
+<h4>Pas d'ingredients</h4>{% endif %}{% endblock %}

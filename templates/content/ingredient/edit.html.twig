@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% block title %}Create new Ingredient
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<h2 class='mt-4' style="color: #4F805D">Modifier l'ingrédient</h2>
+		<div class="form-group">
+			{{ form_start(form) }}
+			<div class="row">
+				<div class="col">
+					{{ form_label(form.name) }}
+					{{ form_widget(form.name) }}
+					<div class="form-error">
+						{{ form_errors(form.name) }}
+					</div>
+				</div>
+				<div class="col">
+					{{ form_label(form.quantity) }}
+					{{ form_widget(form.quantity) }}
+					<div class="error">
+						{{ form_errors(form.quantity) }}
+					</div>
+				</div>
+				<div class="col">
+					{{ form_label(form.price) }}
+					{{ form_widget(form.price) }}
+					<div class="error">
+						{{ form_errors(form.price) }}
+					</div>
+				</div>
+				<div class="row">
+					{{ form_row(form.submit) }}
+				</div>
+			</div>
+			{{ form_end(form) }}
+		</div>
+		{# helper function to render the form content #}
+	</div>
+{% endblock %}

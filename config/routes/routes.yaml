@@ -1,0 +1,8 @@
+app_ingredients:
+    path: /ingredients
+    controller: App\Controller\IngredientController::findAllIngredients
+
+ingredient_edit:
+    path: ingredient/edit/{id}
+    controller: App\Controller\IngredientController::editIngredient
+

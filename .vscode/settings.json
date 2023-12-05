@@ -1,0 +1,6 @@
+{
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "[twig]": {
+        "editor.defaultFormatter": "mblode.twig-language-2"
+    }
+}
