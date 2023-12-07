@@ -29,8 +29,8 @@
 				{{ ingredients.getTotalItemCount }}
 				ingrédients au total
 			</p>
-			<table class="table table-active">
-				<thead class="thead-dark">
+			<table class="table table-striped">
+				<thead class="thead table-success">
 					<tr>
 						<th scope="col">ID</th>
 						<th scope="col">Name</th>
@@ -78,13 +78,12 @@
 						</tr>
 					{% endfor %}
 				</tbody>
-			</tbody>
-		</tr>
-	</tbody>
-</table>
-
+			</table>
 {# display navigation #}
-<div class="navigation d-flex justify-content-center mt-4">
-	{{ knp_pagination_render(ingredients) }}
-</div>{% else %}
-<h4>Pas d'ingredients</h4>{% endif %}{% endblock %}
+		<div class="navigation d-flex justify-content-center mt-4">
+			{{ knp_pagination_render(ingredients) }}
+		</div>
+		{% else %}
+			<h4>Pas d'ingredients</h4>
+		{% endif %}
+{% endblock %}

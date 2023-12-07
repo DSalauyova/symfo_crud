@@ -26,6 +26,7 @@ class IngredientController extends AbstractController
      * @param Request $request
      * @return Response
      */
+
     #[Route('/ingredients', name: 'app_ingredients', methods: 'GET')]
     //importer la repository class et la nommer, injection de la dependence
     //on importe aussi PaginatorInterface pour rajouter la pagination pour le tableau
