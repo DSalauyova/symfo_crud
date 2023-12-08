@@ -138,13 +138,12 @@ class RecipeType extends AbstractType
                 CheckboxType::class,
                 [
                     'attr' => [
-                        'class' => 'form-control',
-
+                        'class' => 'form-check-input'
                     ],
                     'required' => false,
                     'label' => 'Favorits',
                     'label_attr' => [
-                        'class' => 'form-label mt-6'
+                        'class' => 'form-check-label'
                     ],
                     'constraints' => [
                         new Assert\NotNull()
