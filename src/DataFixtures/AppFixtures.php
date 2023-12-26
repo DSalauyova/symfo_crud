@@ -4,12 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
-use DateTimeImmutable;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator as FakerGenerator;
-
 
 class AppFixtures extends Fixture
 {
@@ -63,6 +62,19 @@ class AppFixtures extends Fixture
             // ->setCreatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeThisDecade()))
             // ->setUpdatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeThisDecade()));
             $manager->persist($recipe);
+        }
+
+        //users
+        for ($m = 0; $m <= 10; $m++) {
+            $user = new User();
+            $user->setUsername($this->faker->userName())
+                ->setEmail($this->faker->email())
+                ->setAgentNumber($this->faker->numberBetween(3000, 4000))
+                ->setRoles([("basic-user")])
+                //mdp de base
+                ->setPlainPassword('password');
+            //a ce moment il va faire appel a la doctrine qui elle appellera le listener dans App\EntityListener: resource: ".. EntityListener - in security.yaml. Il va voir qu'il ya encode password 
+            $manager->persist($user);
         }
         $manager->flush();
     }

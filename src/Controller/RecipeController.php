@@ -98,6 +98,7 @@ class RecipeController extends AbstractController
         int $id
     ): Response {
         $recipe = $repository->find($id);
+        dd($recipe);
         $form = $this->createForm(RecipeType::class, $recipe);
         //fait apparraitre les données dans le formumlaire
         $form->handleRequest($request);

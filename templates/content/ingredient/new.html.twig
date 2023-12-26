@@ -3,40 +3,39 @@
 {% endblock %}
 {% block body %}
 	<div class="container">
-		<h2 class='mt-4' style="color: #4F805D">Création d'un ingrédient</h2>
+		<h2 class='mt-4' style="color: #4F805D">Create a new Ingredient</h2>
 		<div class="form-group">
-			{{ form_start(form) }}
-			<div
-				class="row">
-				{#form customisé doc/current/form/form_customization.html #}
-				<div class="col">
-					{{ form_label(form.name) }}
-					{{ form_widget(form.name) }}
-					<div class="form-error">
-						{{ form_errors(form.name) }}
-					</div>
-				</div>
-
-				<div class="col">
-					{{ form_label(form.quantity) }}
-					{{ form_widget(form.quantity) }}
-					<div class="error">
-						{{ form_errors(form.quantity) }}
-					</div>
-				</div>
-				<div class="col">
-					{{ form_label(form.price) }}
-					{{ form_widget(form.price) }}
-					<div class="error">
-						{{ form_errors(form.price) }}
-					</div>
-				</div>
+			{{ form (form) }}
 				<div class="row">
-					{{ form_row(form.submit) }}
-				</div>
+					{#form customisé doc/current/form/form_customization.html #}
+					{# <div class="col">
+										{{ form_label(form.name) }}
+										{{ form_widget(form.name) }}
+										<div class="form-error">
+											{{ form_errors(form.name) }}
+										</div>
+									</div>
+					
+									<div class="col">
+										{{ form_label(form.quantity) }}
+										{{ form_widget(form.quantity) }}
+										<div class="error">
+											{{ form_errors(form.quantity) }}
+										</div>
+									</div>
+									<div class="col">
+										{{ form_label(form.price) }}
+										{{ form_widget(form.price) }}
+										<div class="error">
+											{{ form_errors(form.price) }}
+										</div>
+									</div>
+									<div class="row">
+										{{ form_row(form.submit) }}
+									</div>
+								</div> #}
+				{{ form_end(form) }}
 			</div>
-			{{ form_end(form) }}
-		</div>
-		{#helper function to render the form content#}
-	</div>
-{% endblock %}
+				{#helper function to render the form content#}
+			</div>
+		{% endblock %}

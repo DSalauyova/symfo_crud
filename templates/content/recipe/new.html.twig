@@ -5,72 +5,72 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+	<div class="container">
 		<h2 class='mt-4' style="color: #4F805D">Create your recipe</h2>
 		<div class="form-group">
 			{{ form_start(form) }}
-				{#form customisé doc/current/form/form_customization.html #}
-				<div class="col">
-					{{ form_label(form.name) }}
-					{{ form_widget(form.name) }}
-					<div class="form-error">
-						{{ form_errors(form.name) }}
-					</div>
-				</div>
-				<div class="col">
-					{{ form_label(form.time) }}
-					{{ form_widget(form.time) }}
-					<div class="error">
-						{{ form_errors(form.time) }}
-					</div>
-				</div>
-				<div class="col">
-					{{ form_label(form.person_nb) }}
-					{{ form_widget(form.person_nb) }}
-					<div class="error">
-						{{ form_errors(form.person_nb) }}
-					</div>
-				</div>
-                <div class="col">
-					{{ form_label(form.difficulty) }}
-					{{ form_widget(form.difficulty) }}
-					<div class="error">
-						{{ form_errors(form.difficulty) }}
-					</div>
-				</div>
-                <div class="col">
-					{{ form_label(form.description) }}
-					{{ form_widget(form.description) }}
-					<div class="error">
-						{{ form_errors(form.description) }}
-					</div>
-				</div>
-                <div class="col">
-					{{ form_label(form.price) }}
-					{{ form_widget(form.price) }}
-					<div class="error">
-						{{ form_errors(form.price) }}
-					</div>
-				</div>
-                <div class="col">
-					{{ form_label(form.isFavorite) }}
-					{{ form_widget(form.isFavorite) }}
-					<div class="error">
-						{{ form_errors(form.isFavorite) }}
-					</div>
-				</div>
-                <div class="col">
-					{{ form_label(form.ingredients) }}
-					{{ form_widget(form.ingredients) }}
-					<div class="error">
-						{{ form_errors(form.ingredients) }}
-					</div>
-				</div>
-				<div class="row">
-					{{ form_row(form.submit) }}
-				</div>
-			</div>
-			{{ form_end(form) }}
-		</div>
+			{#form customisé doc/current/form/form_customization.html #}
+			{# <div class="col">
+								{{ form_label(form.name) }}
+								{{ form_widget(form.name) }}
+								<div class="form-error">
+									{{ form_errors(form.name) }}
+								</div>
+							</div>
+							<div class="col">
+								{{ form_label(form.time) }}
+								{{ form_widget(form.time) }}
+								<div class="error">
+									{{ form_errors(form.time) }}
+								</div>
+							</div>
+							<div class="col">
+								{{ form_label(form.person_nb) }}
+								{{ form_widget(form.person_nb) }}
+								<div class="error">
+									{{ form_errors(form.person_nb) }}
+								</div>
+							</div>
+			                <div class="col">
+								{{ form_label(form.difficulty) }}
+								{{ form_widget(form.difficulty) }}
+								<div class="error">
+									{{ form_errors(form.difficulty) }}
+								</div>
+							</div>
+			                <div class="col">
+								{{ form_label(form.description) }}
+								{{ form_widget(form.description) }}
+								<div class="error">
+									{{ form_errors(form.description) }}
+								</div>
+							</div>
+			                <div class="col">
+								{{ form_label(form.price) }}
+								{{ form_widget(form.price) }}
+								<div class="error">
+									{{ form_errors(form.price) }}
+								</div>
+							</div>
+			                <div class="col">
+								{{ form_label(form.isFavorite) }}
+								{{ form_widget(form.isFavorite) }}
+								<div class="error">
+									{{ form_errors(form.isFavorite) }}
+								</div>
+							</div>
+			                <div class="col">
+								{{ form_label(form.ingredients) }}
+								{{ form_widget(form.ingredients) }}
+								<div class="error">
+									{{ form_errors(form.ingredients) }}
+								</div>
+							</div>
+							<div class="row">
+								{{ form_row(form.submit) }}
+							</div>
+						</div> #}
+		{{ form_end(form) }}
+	</div>
 		{#helper function to render the form content#}
-{% endblock %}
+	{% endblock %}

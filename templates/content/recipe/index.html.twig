@@ -7,15 +7,8 @@
 {% block body %}
 
 	<div class='container mt-3'>
-		{% if not recipes.items is same as([]) %}
-			<h4 style="color: #4F805D">All recipes :</h4>
-			<button class="mb-4 btn btn-primary">
-				<a href={{ path('new_recipe')}}>
-					Create a new recipe
-				</a>
-			</button>
 
-			{# pour afficher un message de rajout d'un ingredient #}
+		<div class="container mt-5 text-center">
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
 					<div class="alert alert-success mt-4">
@@ -23,78 +16,98 @@
 					</div>
 				{% endfor %}
 			{% endfor %}
-			{# getTotalItemCount methode symf pour compter le nombre total des objets  #}
-			<p class='mb-2'>
-				{{ recipes.getTotalItemCount }}
-				total recipes :
-			</p>
-			<table class="table table-active">
-				<thead class="thead table-info">
-					<tr>
-						<th scope="col">ID</th>
-						<th scope="col">Name</th>
-						<th scope="col">Difficulty</th>
-						<th scope="col">Description</th>
-						<th scope="col">Price</th>
-						<th scope="col">created</th>
-						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
-					</tr>
-				</thead>
-				<tbody>
-					{# comme plusieurs criteres ne sont pas renseignées, on rajoute des ternary pour twig #}
-					{% for recipe in recipes %}
-						<tr class="table-light">
-							<th scope="row">
-								<p>
-									{{ recipe.id }}
-								</p>
-							</th>
-							<td>
-								<p>
-									{{ recipe.name }}
-								</p>
-							</td>
-							<td>
-								<p>
-									{# si la valeur n'existe pas, afficher le text suivant, sinon afficher la valeur #}
-									{{ (recipe.difficulty == null) ? '--' : recipe.difficulty }}
-								</p>
-							</td>
-							<td>
-								<p>
-									{{ recipe.description }}
-								</p>
-							</td>
-							<td>
-								<p>
-									{{ (recipe.price is same as(null)) ? 'No info yet' : recipe.price }}
-								</p>
-							</td>
-							<td>
-								<p>
-									{{ recipe.createdAt|date('d/m/Y') }}
-								</p>
-							</td>
-							<td>
-								<button class="btn btn-warning">
-									<a href="{{ path('edit_recipe', { id: recipe.id }) }}">
-										EDIT
-									</a>
-								</button>
-							</td>
-							<td>
-								<button class="btn btn-danger">
-									<a href="{{ path('delete_recipe', { id: recipe.id }) }}">
-										DELETE
-									</a>
-								</a>
-							</td>
+
+
+			{% if not recipes.items is same as([]) %}
+				<h4 style="color: #4F805D">All recipes :</h4>
+				<button class="mb-4 btn btn-primary">
+					<a href={{ path('new_recipe')}}>
+						Create a new recipe
+					</a>
+				</button>
+
+				{# pour afficher un message de rajout d'un ingredient #}
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-success mt-4">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{# getTotalItemCount methode symf pour compter le nombre total des objets  #}
+				<p class='mb-2'>
+					{{ recipes.getTotalItemCount }}
+					total recipes :
+				</p>
+				<table class="table table-active">
+					<thead class="thead table-info">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Name</th>
+							<th scope="col">Difficulty</th>
+							<th scope="col">Description</th>
+							<th scope="col">Price</th>
+							<th scope="col">created</th>
+							<th scope="col">Edit</th>
+							<th scope="col">Delete</th>
 						</tr>
-					</button>
-				</tbody>
-			</td>
-		</tr>
-	{% endfor %}
-</tbody></table>{# display navigation #}<div class="navigation d-flex justify-content-center mt-4">
-{{ knp_pagination_render(recipes) }}</div>{% else %}<h4>No recipes</h4>{% endif %}{% endblock %}
+					</thead>
+					<tbody>
+						{# comme plusieurs criteres ne sont pas renseignées, on rajoute des ternary pour twig #}
+						{% for recipe in recipes %}
+							<tr class="table-light">
+								<th scope="row">
+									<p>
+										{{ recipe.id }}
+									</p>
+								</th>
+								<td>
+									<p>
+										{{ recipe.name }}
+									</p>
+								</td>
+								<td>
+									<p>
+										{# si la valeur n'existe pas, afficher le text suivant, sinon afficher la valeur #}
+										{{ (recipe.difficulty == null) ? '--' : recipe.difficulty }}
+									</p>
+								</td>
+								<td>
+									<p>
+										{{ recipe.description }}
+									</p>
+								</td>
+								<td>
+									<p>
+										{{ (recipe.price is same as(null)) ? 'No info yet' : recipe.price }}
+									</p>
+								</td>
+								<td>
+									<p>
+										{{ recipe.createdAt|date('d/m/Y') }}
+									</p>
+								</td>
+								<td>
+									<button class="btn btn-warning">
+										<a href="{{ path('edit_recipe', { id: recipe.id }) }}">
+											EDIT
+										</a>
+									</button>
+								</td>
+								<td>
+									<button class="btn btn-danger">
+										<a href="{{ path('delete_recipe', { id: recipe.id }) }}">
+											DELETE
+										</a>
+									</a>
+								</td>
+							</tr>
+						</button>
+					</tbody>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>{# display navigation #}<div class="navigation d-flex justify-content-center mt-4">
+	{{ knp_pagination_render(recipes) }}</div>{% else %}
+<h4>No recipes</h4>{% endif %}{% endblock %}

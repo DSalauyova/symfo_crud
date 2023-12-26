@@ -6,3 +6,10 @@ ingredient_edit:
     path: ingredient/edit/{id}
     controller: App\Controller\IngredientController::editIngredient
 
+security_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_registration:
+    path: /sign_in
+    controller: App\Controller\SecurityController:registration
