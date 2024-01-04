@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Test!{% endblock %}
+{% block title %}Test!
+{% endblock %}
 
 {% block body %}
 
-<h1>TEST PAGE</h1>
+	<h1>TEST PAGE</h1>
 
-{% include "elements/_button.html.twig" %}
+	<p>{{mess}}</p>
+
+	{% include "elements/_button.html.twig" %}
 
 {% endblock %}

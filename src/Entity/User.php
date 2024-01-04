@@ -10,8 +10,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('username')]
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\EntityListeners(['App\EntityListener\UserListener'])]
+// #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -40,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     //ajouté, pas mettre le decore de ORM pour pas que le pass non encodé se trouve dansla bd
     private ?string $plainPassword = null;
+    private ?string $newPassword = null;
 
     /**
      * @var string The hashed password
@@ -127,6 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plainPassword = $plainPassword;
         return $this;
     }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -178,5 +181,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * Get the value of newPassword
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * Set the value of newPassword
+     *
+     * @return  self
+     */
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
+
+        return $this;
     }
 }

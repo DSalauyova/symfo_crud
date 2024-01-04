@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\VarDumper\VarDumper;
 
 class RecipeController extends AbstractController
 {
@@ -98,13 +97,13 @@ class RecipeController extends AbstractController
         int $id
     ): Response {
         $recipe = $repository->find($id);
-        dd($recipe);
         $form = $this->createForm(RecipeType::class, $recipe);
         //fait apparraitre les données dans le formumlaire
         $form->handleRequest($request);
         //2 etape validation de formulaire; il enverra les données du formulaire dans la bdd
+        $recipe = $form->getData();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe = $form->getData();
             $manager->persist($recipe);
             // ce message se rajoutera aux changements
             $manager->flush();

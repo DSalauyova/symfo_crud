@@ -18,11 +18,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     
-    App\Entity\Ingredient:
-        autowire: true
-    App\Repository\IngredientRepository:
-        arguments:
-            $class: 'App\Entity\Ingredient'
+   
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -31,16 +27,40 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\Entity\User:
+    #     autowire: true
+        public: true
 
-    App\EntityListener\:
-        resource: '../src/EntityListener'
-        tags:
-            - { name: 'doctrine.orm.entity_listener' }
+    App\Repository\UserRepository:
+        autowire: true
+        public: true
+        # arguments:
+        #     class: 'App\Entity\User'
+
+    # Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+    #     alias: App\Entity\User
+
+    App\Entity\Ingredient:
+        autowire: true
+        public: true
+        # resource: '../src/Entity/Ingredient'
+
+    App\Repository\IngredientRepository:
+        arguments:
+            # $class: App\Entity\Ingredient
+    # App\EntityListener\:
+    #     resource: '../src/EntityListener'
+    #     tags:
+    #         - { name: 'doctrine.orm.entity_listener' }
             
-    # App\Entity\User\:
-    #     resource: '../src/Entity/'
-    #     autowire: true 
-    # App\Repository\UserRepository:
+    App\Controller\UserController:
+        autowire: true
+        autoconfigure: true
+
+
+    #App\Entity\Ingredient:
+    #     autowire: true
+    # App\Repository\IngredientRepository:
     #     arguments:
     #         $class: 'App\Entity\User'
 

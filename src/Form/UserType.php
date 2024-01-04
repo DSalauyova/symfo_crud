@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,13 +54,26 @@ class UserType extends AbstractType
                     ]
                 ]
             )
+            ->add(
+                'plainPassword',
+                PasswordType::class,
+                [
+                    'attr' => ['class' => 'form-control '],
+                    'label' => 'Password',
+                    'label_attr' => ['class' => 'form-label mt-4']
+                ]
+            )
 
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-info mt-4'
-                ],
-                'label' => 'Submit'
-            ]);
+            ->add(
+                'submit',
+                SubmitType::class,
+                [
+                    'attr' => [
+                        'class' => 'btn btn-info mt-4'
+                    ],
+                    'label' => 'Submit'
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
