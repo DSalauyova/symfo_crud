@@ -1,4 +1,6 @@
 <?php
+
+//!!! C'est la classe qui est chargé par autoload de Symfony et donc projet ne fonctionnera pas meme si les autres classes n'incluent pas la dependance 
 //espace des tous les events qui ont un event pour certaines entities 
 // namespace App\EntityListener;
 

@@ -27,6 +27,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Entity/EntityListener'
     App\Entity\User:
     #     autowire: true
         public: true

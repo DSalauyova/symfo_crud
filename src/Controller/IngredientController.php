@@ -34,7 +34,9 @@ class IngredientController extends AbstractController
     {
         $ingredients = $paginator->paginate(
             //methode comprend query et request
-            $getRepository->findAll(), /* $query */
+            //$getRepository->findAll(), /* $query */
+            //afficher ingred uniquement reliés a user courant
+            $getRepository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit par page*/
         );
@@ -82,6 +84,7 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
+            $ingredient->setUser($this->getUser());
             //sent data like commit and push
             $manager->persist($ingredient);
             //push

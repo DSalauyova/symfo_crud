@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -57,8 +58,12 @@ class SecurityController extends AbstractController
      * @return Response
      */
     #[Route(path: '/sign_in', name: 'app_registration', methods: ['GET', 'POST'])]
-    public function registration(Request $request, EntityManagerInterface $manager): Response
-    {
+    //avec une option de mdp hashé
+    public function registration(
+        Request $request,
+        EntityManagerInterface $manager,
+        UserPasswordHasherInterface $hasher
+    ): Response {
         $user = new User();
         //creation d'un Form avec info user
         $user->setRoles(['ROLE_USER']);
@@ -67,8 +72,16 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         //si form a été soumis et validé par notre Rigister type(les contraints)
         if ($form->isSubmitted() && $form->isValid()) {
+            // Hacher le mot de passe
+            $hashedPassword = $hasher->hashPassword(
+                $user,
+                $user->getPlainPassword()
+            );
+            //pas confondre avec setPlainPass qui ne fonctionnera pas dans ce cas
+            $user->setPassword($hashedPassword);
             //demander les données de form
             $user = $form->getData();
+
             //message sur la redirection
             $manager->persist($user);
             $manager->flush();

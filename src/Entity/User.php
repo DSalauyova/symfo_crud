@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -54,11 +56,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ingredient::class, orphanRemoval: true)]
+    private Collection $Ingredients;
+
     //methode magique
     public function __construct()
     {
         //quand l'objet est instancié, son createdAt est nouvelle DateTimeImm
         $this->createdAt = new \DateTimeImmutable();
+        $this->Ingredients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get the value of plainPassword
+     * Set the value of plainPassword
      */
     public function setPlainPassword($plainPassword)
     {
@@ -199,6 +205,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNewPassword($newPassword)
     {
         $this->newPassword = $newPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->Ingredients;
+    }
+
+    public function addIngredient(Ingredient $ingredient): static
+    {
+        if (!$this->Ingredients->contains($ingredient)) {
+            $this->Ingredients->add($ingredient);
+            $ingredient->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): static
+    {
+        if ($this->Ingredients->removeElement($ingredient)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredient->getUser() === $this) {
+                $ingredient->setUser(null);
+            }
+        }
 
         return $this;
     }
