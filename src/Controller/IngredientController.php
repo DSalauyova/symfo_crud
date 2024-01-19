@@ -7,6 +7,7 @@ use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,8 @@ class IngredientController extends AbstractController
      */
 
     #[Route('/ingredients', name: 'app_ingredients', methods: 'GET')]
+    #[IsGranted('ACCES_PAGES')]
+
     //importer la repository class et la nommer, injection de la dependence
     //on importe aussi PaginatorInterface pour rajouter la pagination pour le tableau
     public function findAllIngredients(IngredientRepository $getRepository, PaginatorInterface $paginator, Request $request): Response

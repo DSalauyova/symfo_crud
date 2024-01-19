@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class RecipeController extends AbstractController
 {
@@ -23,6 +24,8 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Route('/recipes', name: 'app_recipes', methods: ['GET'])]
+    #[IsGranted('ACCES_PAGES')]
+
     public function findAllRecipes(
         PaginatorInterface $paginator,
         RecipeRepository $recipeRepository,
