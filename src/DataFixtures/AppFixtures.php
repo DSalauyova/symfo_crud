@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
     {
         //users
         $users = [];
-        for ($m = 0; $m <= 30; $m++) {
+        for ($m = 0; $m <= 20; $m++) {
             $user = new User();
             $hashedPassword = $this->hasher->hashPassword(
                 $user,
@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         }
 
         //10 recipes
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 28; $x++) {
             $recipe = new Recipe();
             $recipe->setName($this->faker->word())
                 //génère un nombre aléatoire qui peut être soit 0, soit 1. Cela crée une condition booléenne qui équivaut à "true" avec une probabilité de 50% et "false" avec une probabilité de 50%)
@@ -77,7 +77,8 @@ class AppFixtures extends Fixture
                 ->setDifficulty(mt_rand(0, 1) == 1 ? mt_rand(1, 5) : null)
                 ->setDescription($this->faker->text(255))
                 ->setPrice($this->faker->randomFloat(2, 1, 100))
-                ->setIsFavorite(mt_rand(0, 1) == 1 ? true : false);
+                ->setIsFavorite(mt_rand(0, 1) == 1 ? true : false)
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
             //entre 1 et 11 ingredients possible par recette
             for ($y = 0; $y < mt_rand(1, 11); $y++) {
                 //ajouter dans la recette deux minimum ou plusieurs ingredient du tab des ingredients (au-dessus)
