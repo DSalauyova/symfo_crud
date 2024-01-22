@@ -7,6 +7,7 @@ use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,7 @@ class RecipeController extends AbstractController
      * @param integer $id
      * @return Response
      */
+    #[IsGranted('ACCES_PAGES')]
     #[Route('/recipes/create', name: 'new_recipe', methods: ['GET', 'POST'])]
     public function createNewRecipe(
         Request $request,
@@ -93,12 +95,14 @@ class RecipeController extends AbstractController
      * @param integer $id
      * @return Response
      */
+    #[Security("is_granted('ACCES_PAGES') and user === recipe.getUser() ")]
     #[Route(path: '/recipes/edit/{id}', name: 'edit_recipe', methods: ['GET', 'POST'])]
     public function editRecipe(
         EntityManagerInterface $manager,
         RecipeRepository $repository,
         Request $request,
-        int $id
+        int $id,
+        Recipe $recipe
     ): Response {
         $recipe = $repository->find($id);
         $form = $this->createForm(RecipeType::class, $recipe);

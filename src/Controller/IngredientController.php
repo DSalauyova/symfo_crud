@@ -8,6 +8,7 @@ use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IngredientController extends AbstractController
 {
-
     /**
      *
      * READ
@@ -50,21 +50,6 @@ class IngredientController extends AbstractController
             ]
         );
     }
-
-    //read/find one element (cRud)
-
-    // #[Route('/ingredient/{id}', name: 'app_ingredient')]
-    // public function findById(IngredientRepository $itemIngredient, int $id): Response
-    // {
-    //     $oneIngredient = $itemIngredient
-    //         ->find($id);
-    //     return $this->render(
-    //         'content/ingredient/index.html.twig',
-    //         ['oneIngredient' => $oneIngredient]
-    //     );
-    // }
-
-
     /**
      * CREATE element
      * function createNewIngredient
@@ -74,6 +59,7 @@ class IngredientController extends AbstractController
      * @return Response
      */
     #[Route(path: 'ingredient/create', name: 'ingredient.new', methods: ['GET', 'POST'])]
+    #[IsGranted('ACCES_PAGES')]
     //request en param pour recuperer request en POST quand on a soumit le form
     public function createNewIngredient(
         Request $request,
@@ -116,12 +102,16 @@ class IngredientController extends AbstractController
      * il existe 2 possibilités : soit recuperer l'objet par son id, soit le faire automtiquement en passant objet en parametre cela necessite autowiring, en utilisant un paramètre de convertisseur de route. Cela permettrait de définir comment Symfony doit récupérer l'objet Ingredient en fonction de l'identifiant dans l'URL. Mais il faut creer un convertisseur de route.
      * on ne va pas s'embeter et preferons la methode scolaire avec id
      */
+
+    //est là pour empecher à user de modifier les ingredients des autres user
+    #[Security("is_granted('ACCES_PAGES') and user === ingredient.getUser() ")]
     #[Route('/ingredient/edit/{id}', name: 'ingredient_edit', methods: ['GET', 'POST'])]
     public function editIngredient(
         int $id,
         IngredientRepository $repo,
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        Ingredient $ingredient
     ): Response {
         $ingredient = $repo->find($id);
         // $ingredient est maintenant correctement récupéré
