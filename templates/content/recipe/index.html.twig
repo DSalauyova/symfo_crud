@@ -17,7 +17,6 @@
 				{% endfor %}
 			{% endfor %}
 
-
 			{% if not recipes.items is same as([]) %}
 				<h4 style="color: #4F805D">All recipes :</h4>
 				<button class="mb-4 btn btn-primary">
@@ -110,4 +109,9 @@
 	</tbody>
 </table>{# display navigation #}<div class="navigation d-flex justify-content-center mt-4">
 	{{ knp_pagination_render(recipes) }}</div>{% else %}
-<h4>No recipes</h4>{% endif %}{% endblock %}
+<h4>No recipes</h4>
+<a href="{{ path('new_recipe')}}">
+	<h5>
+		Create a new recipe
+	</h5>
+</a>{% endif %}{% endblock %}

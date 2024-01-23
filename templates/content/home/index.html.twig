@@ -6,12 +6,27 @@
 
 {% block body %}
 
-	<div class="container mt-5 text-center">
+	<div class="block_home container mt-5 text-center">
 		<h1>{{ controller_name }}!</h1>
 		<h2>Are you hungry ???</h2>
 		<img src={{ asset('media/home-pic.jpg') }} alt='carotte et ane' width="420"/>
-
-		<h3 class="mt-3" style='color: red'>Here's All Our Recipes</h3>
+		{% include "elements/_button.html.twig" %}
+		<h3 class="mt-5" style='color: red'>Here's Some Delicious and Easy Recipes</h3>
 	</div>
-	{% include "elements/_button.html.twig" %}
+
+	<div class="shared_recipes d-flex justify-content-center">
+		{% for recipe in public_recipes %}
+			<div class="card text-white bg-info m-3" style="max-width: 18rem;">
+				<div class="card-header">
+					<h4 class="card-title">{{ recipe.name }}</h4>
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{ recipe.description }}
+					</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+
 {% endblock %}

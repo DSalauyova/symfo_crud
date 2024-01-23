@@ -79,11 +79,18 @@
 					{% endfor %}
 				</tbody>
 			</table>
-{# display navigation #}
-		<div class="navigation d-flex justify-content-center mt-4">
-			{{ knp_pagination_render(ingredients) }}
-		</div>
+			{# display navigation #}
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(ingredients) }}
+			</div>
 		{% else %}
-			<h4>Pas d'ingredients</h4>
+			<h4>No ingredients yet</h4>
+			<a href="{{ path('ingredient.new')}}">
+				<h5>
+					Create a new ingredient
+				</h5>
+			</a>
+
+
 		{% endif %}
-{% endblock %}
+	{% endblock %}

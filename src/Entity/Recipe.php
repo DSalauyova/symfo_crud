@@ -52,6 +52,9 @@ class Recipe
     #[ORM\Column(nullable: true)]
     private ?bool $isFavorite = null;
 
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
     #[ORM\Column(nullable: true)]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt = null;
@@ -66,6 +69,7 @@ class Recipe
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
     //pour chaque collection des ingredients on va initialiser au moment de sa creation on va egalement obtenir 2 dates, creation et modification
     public function __construct()
     {
@@ -169,7 +173,16 @@ class Recipe
 
         return $this;
     }
+    public function getIsPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+    public function setIsPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
+        return $this;
+    }
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Our Recipes
+{% endblock %}
+
+{% block body %}
+
+	<div class='container mt-4 text-center'>
+		{% if not public_recipes.items is same as([]) %}
+			<h4 class="mb-4" style="color: #4F805D">Community Recipes :</h4>
+			<div class="d-flex justify-content-center flex-wrap">
+				{% for recipe in public_recipes %}
+					<div class="card text-white bg-success m-2" style="max-width: 18rem;">
+						<div class="card-header">
+							<h4 class="card-title">{{ recipe.name }}</h4>
+						</div>
+						<div class="card-body">
+							<p class="card-text">{{ recipe.description }}
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(public_recipes) }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

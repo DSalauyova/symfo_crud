@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Recipe -
+	{{ recipe.name }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="mt-4">{{ recipe.name }}</h1>
+		<div>
+			<span class="badge bg-warning">Created at
+				{{ recipe.createdAt | date('d/m/Y') }}
+			</span>
+		</div>
+		<div class="mt-4">
+			<p>Time :
+				{% if recipe.time %}
+					{{ recipe.time }}min
+				{% else %}
+					(unknown)
+				{% endif %}
+			</p>
+		</div>
+		<div class="mt-4">
+			<p>Number of persons :
+				{% if recipe.personNb %}
+					{{ recipe.personNb }}
+				{% else %}
+					(unknown)
+				{% endif %}
+			</p>
+		</div>
+		<div class="mt-4">
+			<p>Difficulty :
+				{% if recipe.difficulty %}
+					{{ recipe.difficulty }}
+				{% else %}
+					(unknown)
+				{% endif %}
+			</p>
+		</div>
+		<div>
+			<p>Price :
+				{{ recipe.price }}€</p>
+		</div>
+		<div>
+			<p>Description :
+				{{ recipe.description | raw }}</p>
+		</div>
+
+		<h5 style="color:#18bc9c">Ingredients for :</h5>
+		{% for ingredient in recipe.ingredients %}
+			<span class="badge bg-warning">{{ ingredient.name }}</span>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -46,6 +46,37 @@ class RecipeController extends AbstractController
         );
     }
     /**
+     * methode render public(parser)
+     *
+     * @return boolean
+     */
+    #[Security("is_granted('ACCES_PAGES') && recipe.getIsPublic() === true")]
+    #[Route('recipe/{id}', name: 'show_recipe', methods: ['GET'])]
+    public function isPublic(Recipe $recipe): Response
+    {
+        return $this->render(
+            'content/recipe/show.html.twig',
+            ['recipe' => $recipe]
+        );
+    }
+
+    #[Route('recipes/public', name: 'public_recipes', methods: 'GET')]
+    public function repositoryPublic(
+        PaginatorInterface $paginator,
+        RecipeRepository $repository,
+        Request $request
+    ): Response {
+        $public_recipes = $paginator->paginate(
+            $repository->findPublicRecipe(50),
+            $request->query->getInt('page', 1),
+            7
+        );
+        return $this->render(
+            'content/recipe/public_recipes.html.twig',
+            ['public_recipes' => $public_recipes]
+        );
+    }
+    /**
      * method CREATE
      *
      * @param RecipeRepository $recipeRepository
