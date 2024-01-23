@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ingredient;
+use App\Entity\Rating;
 use App\Entity\Recipe;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -66,7 +67,8 @@ class AppFixtures extends Fixture
             $manager->persist($ingredient);
         }
 
-        //10 recipes
+        // recipes
+        $recipes = [];
         for ($x = 1; $x <= 28; $x++) {
             $recipe = new Recipe();
             $recipe->setName($this->faker->word())
@@ -85,9 +87,26 @@ class AppFixtures extends Fixture
                 //ajouter dans la recette deux minimum ou plusieurs ingredient du tab des ingredients (au-dessus)
                 $recipe->addIngredient($ingredients[mt_rand(2, count($ingredients) - 1)]);
             }
-            // ->setCreatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeThisDecade()))
-            // ->setUpdatedAt(DateTimeImmutable::createFromMutable($this->faker->dateTimeThisDecade()));
+            $recipes[] = $recipe;
             $manager->persist($recipe);
+        }
+        /**
+         * Rating
+         * A chaque boucle de recettes insertion dans la nouvelle table Rating : 
+         * - un nouveau objet rating(note) est crée (de 1 a 5 random)
+         * - un user est attribué (du premier au dernier)
+         * - la recette courante du boucle (inserée dans la table)
+         * 
+         */
+        foreach ($recipes as $recipe) {
+            for ($k = 0; $k < mt_rand(0, 4); $k++) {
+                $rating = new Rating;
+                $rating
+                    ->setRate(mt_rand(1, 5))
+                    ->setUser($users[mt_rand(0, count($users) - 1)])
+                    ->setRecipe($recipe);
+                $manager->persist($rating);
+            }
         }
         //envoi de données en une fois
         $manager->flush();
