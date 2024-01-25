@@ -7,7 +7,19 @@
 
 {% block body %}
 	<div class="container">
+		{% for messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-success mt-4">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+
 		<h1 class="mt-4">{{ recipe.name }}</h1>
+		<span class="badge bg-danger">Rating :
+			{{ (recipe.average|number_format(1, '.', ',')) }}
+			/ 5</span>
 		<div>
 			<span class="badge bg-warning">Created at
 				{{ recipe.createdAt | date('d/m/Y') }}
@@ -53,5 +65,9 @@
 		{% for ingredient in recipe.ingredients %}
 			<span class="badge bg-warning">{{ ingredient.name }}</span>
 		{% endfor %}
-	</div>
-{% endblock %}
+
+		<div class='rate'>
+			{{ form(form) }}
+			</div>
+		</div>
+	{% endblock %}

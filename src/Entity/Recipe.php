@@ -73,6 +73,8 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Rating::class, orphanRemoval: true)]
     private Collection $ratings;
 
+    private ?float $average = null;
+
     //pour chaque collection des ingredients on va initialiser au moment de sa creation on va egalement obtenir 2 dates, creation et modification
     public function __construct()
     {
@@ -275,5 +277,20 @@ class Recipe
         }
 
         return $this;
+    }
+    /**
+     * Get the value of average, calcul d'une moyenne
+     */
+    public function getAverage()
+    {
+        $ratings = $this->ratings;
+        if ($ratings->toArray() === []) {
+            return null;
+        }
+        $total = 0;
+        foreach ($ratings as $rating) {
+            $total += $rating->getRate();
+        }
+        return $this->average = $total / count($ratings);
     }
 }

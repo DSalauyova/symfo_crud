@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Rating;
 use App\Entity\Recipe;
+use App\Form\RatingType;
 use App\Form\RecipeType;
+use App\Repository\RatingRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -51,12 +54,48 @@ class RecipeController extends AbstractController
      * @return boolean
      */
     #[Security("is_granted('ACCES_PAGES') && recipe.getIsPublic() === true")]
-    #[Route('recipe/{id}', name: 'show_recipe', methods: ['GET'])]
-    public function isPublic(Recipe $recipe): Response
-    {
+    #[Route('recipe/{id}', name: 'show_recipe', methods: ['GET', 'POST'])]
+    public function isPublic(
+        Recipe $recipe,
+        RatingRepository $ratingRepository,
+        EntityManagerInterface $manager,
+        Request $request
+    ): Response {
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rating->setUser($this->getUser())
+                ->setRecipe($recipe);
+
+            //utilisateur ne doit pas pouvoir faire 2 fois la notation
+            //la repository va chercher dans la table rating id de la recette et l'id d'utilisateur. Si les deux existent, c'est que cet user a déjà noté la recette en question. si non, il peut la noter
+            $ratingInData = $ratingRepository->findOneBy([
+                'user' => $this->getUser(),
+                'recipe' => $recipe
+            ]);
+
+            if (!$ratingInData) {
+                $manager->persist($rating);
+            } else {
+                $ratingInData->setRate(
+                    $form->getData()->getRate()
+                );
+            }
+            $manager->flush();
+            $this->addFlash(
+                "success",
+                "Merci, Votre note a bien été ajouté ! "
+            );
+            return $this->redirectToRoute('show_recipe', ['id' => $recipe->getId()]);
+        }
+
         return $this->render(
             'content/recipe/show.html.twig',
-            ['recipe' => $recipe]
+            [
+                'recipe' => $recipe,
+                'form' => $form->createView()
+            ]
         );
     }
 
