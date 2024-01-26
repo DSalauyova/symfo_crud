@@ -53,7 +53,7 @@ class RecipeController extends AbstractController
      *
      * @return boolean
      */
-    #[Security("is_granted('ACCES_PAGES') && recipe.getIsPublic() === true")]
+    #[Security("is_granted('ACCES_PAGES') && (recipe.getIsPublic() === true || user === recipe.getUser())")]
     #[Route('recipe/{id}', name: 'show_recipe', methods: ['GET', 'POST'])]
     public function isPublic(
         Recipe $recipe,

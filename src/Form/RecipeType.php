@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
@@ -139,6 +140,10 @@ class RecipeType extends AbstractType
                         new Assert\LessThan(1001)
                     ]
                 ]
+            )
+            ->add(
+                'imageFile',
+                VichImageType::class
             )
             ->add(
                 'isFavorite',
