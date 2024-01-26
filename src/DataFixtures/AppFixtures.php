@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Contact;
 use App\Entity\Ingredient;
 use App\Entity\Rating;
 use App\Entity\Recipe;
@@ -107,6 +108,16 @@ class AppFixtures extends Fixture
                     ->setRecipe($recipe);
                 $manager->persist($rating);
             }
+        }
+
+        //Contact
+        for ($i = 0; $i < 5; $i++) {
+            $contact = new Contact();
+            $contact->setUsername($this->faker->name())
+                ->setMail($this->faker->email())
+                ->setSubject('request N' . ($i + 1))
+                ->setMessage($this->faker->text());
+            $manager->persist($contact);
         }
         //envoi de données en une fois
         $manager->flush();
